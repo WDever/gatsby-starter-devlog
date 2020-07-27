@@ -63,8 +63,6 @@ const fetchDirName = async (defaultDirName: string): Promise<string> => {
     },
   ]);
 
-  console.log(input);
-
   if (input === undefined) {
     const dirName = replaceSpaceToDash(defaultDirName);
     return `${TARGET_DIR}/${dirName}`;
