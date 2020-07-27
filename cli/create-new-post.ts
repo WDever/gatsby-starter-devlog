@@ -42,10 +42,9 @@ const fetchDirName = async (defaultDirName: string): Promise<string> => {
   const { input } = await prompt<{ input?: string }>([
     {
       type: 'input',
-      name: 'dirName',
+      name: 'input',
       message: `Directory name / URL (use '-' instead of space): `,
-      default: (): string =>
-        '(ex: new-post-file-name) Default value is same with title',
+      default: (): string => replaceSpaceToDash(defaultDirName),
       validate: async (input: string): Promise<boolean | string> => {
         if (input.length === 0) {
           return true;
@@ -64,12 +63,14 @@ const fetchDirName = async (defaultDirName: string): Promise<string> => {
     },
   ]);
 
+  console.log(input);
+
   if (input === undefined) {
     const dirName = replaceSpaceToDash(defaultDirName);
     return `${TARGET_DIR}/${dirName}`;
   }
 
-  const dirName = input.split(/\s+/).join('-');
+  const dirName = replaceSpaceToDash(input);
 
   return `${TARGET_DIR}/${dirName}`;
 };
